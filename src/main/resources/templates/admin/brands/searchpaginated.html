@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboardLayout.html}"
+>
+<head>
+
+</head>
+
+<body>
+
+
+  <section class="row" layout:fragment="content">
+    <div class="col mt-4">
+      <div class="card">
+        <div class="card-header">
+          <h3>List brand</h3>
+        </div>
+        <div class="card-body">
+          <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <i>[[${message}]]</i>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true"><i class="ti-close"></i></span>
+            </button>
+          </div>
+          <div class="row mt-2 mb-2">
+            <div class="col">
+              <form th:action="@{/admin/brands/searchpaginated}">
+                <div class="form-inline float-left">
+                  <label for="name">Name</label>
+                  <input type="text" class="form-control mr-2 ml-2" name="name" id="name" aria-describedby="helpId" placeholder="Name">
+                  <button class="btn btn-outline-primary">Search</button>
+                </div>
+              </form>
+              <div class="float-right">
+                <a th:href="@{/admin/brands/add}" class="btn btn-outline-primary" >Add new brand</a>
+              </div>
+            </div>
+          </div>
+          <div class="row" th:if="${!brandPage.hasContent()}">
+            <div class="col">
+              <div class="alert alert-danger" role="alert">
+                <strong>No brands</strong>
+              </div>
+            </div>
+          </div>
+          <table
+                  class="table table-striped"
+                  th:if="${brandPage.hasContent()}"
+          >
+            <thead class="thead">
+            <tr>
+              <th>brand id</th>
+              <th>Name</th>
+              <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each=" brand, iStat : ${brandPage.content}">
+              <td scope="row">[[${brand.brandId}]]</td>
+              <td>[[${brand.name}]]</td>
+              <td>
+                <a th:href="@{'/admin/brands/view/' + ${brand.brandId}}" class="btn btn-outline-info"><i class="ti-info"></i></a>
+                <a th:href="@{'/admin/brands/edit/' + ${brand.brandId}}" class="btn btn-outline-warning"><i class="ti-pencil-alt"></i></a>
+                <a th:href="@{'/admin/brands/delete/' + ${brand.brandId}}" class="btn btn-outline-danger"><i class="ti-trash"></i></a>
+              </td>
+            </tr>
+            <tr>
+              <td scope="row"></td>
+              <td></td>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+
+        </div>
+        <div class="card-footer text-muted">
+          <form action="">
+            <div class="form-inline float-left">
+              <label for="size">Page size: </label>
+              <select class="form-control" name="size" id="size" onChange="this.form.submit()">
+                <option th:selected = "${brandPage.size == 5}" value="5">5</option>
+                <option th:selected = "${brandPage.size == 10}" value="10">10</option>
+                <option th:selected = "${brandPage.size == 15}" value="15">15</option>
+              </select>
+            </div>
+          </form>
+          <nav
+                  aria-label="Page navigation"
+                  th:if="${brandPage.totalPages > 0}"
+          >
+            <ul class="pagination justify-content-center">
+              <li
+                      th:class="${ 1 == brandPage.number + 1} ? 'page-item active' : 'pageItem'"
+              >
+                <a
+                        th:href="@{/admin/brands/searchpaginated(name=${name}, size = ${brandPage.size}, page=${1})}"
+                        class="page-link"
+                >First
+                </a>
+              </li>
+
+              <li
+                      class="page-item active"
+                      th:each=" pageNumber : ${pageNumbers}"
+                      th:if="${brandPage.totalPages > 1}"
+                      th:class="${pageNumber == brandPage.number + 1} ? 'page-item active' : 'pageItem'"
+              >
+                <a
+                        th:href="@{/admin/brands/searchpaginated(name=${name}, size = ${brandPage.size}, page=${pageNumber})}"
+                        class="page-link"
+                        th:text="${pageNumber}"
+                >
+                </a>
+              </li>
+              <li
+                      th:class="${ brandPage.totalPages == brandPage.number + 1} ? 'page-item active' : 'pageItem'"
+              >
+                <a
+                        th:href="@{/admin/brands/searchpaginated(name=${name}, size = ${brandPage.size}, page=${brandPage.totalPages})}"
+                        class="page-link"
+                >Last
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+
+</html>
