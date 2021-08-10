@@ -20,6 +20,6 @@ public class Brand implements Serializable {
     private Long brandId;
     private String name;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Product> listProduct;
 }

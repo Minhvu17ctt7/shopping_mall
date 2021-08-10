@@ -1,14 +1,13 @@
 package com.example.shoppingmall.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,21 +22,24 @@ public class Product implements Serializable {
     private int price;
     @Column(nullable = false)
     private int quantity;
+    private String image;
     private String shortDescription;
     private String information;
     private String material;
+    private String Role;
+
 
 
 //    @Column(nullable = false)
 //    private Long categoryId;
 //    @Column(nullable = false)
 //    private Long brandingId;
-@ManyToOne
-@JoinColumn(name = "categoryId")
-private Category category;
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
     @ManyToOne
     @JoinColumn(name = "brandingId")
     private Brand brand;
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Item> items;
 }

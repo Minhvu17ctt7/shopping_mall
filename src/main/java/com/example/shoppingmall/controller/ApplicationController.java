@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class ApplicationController {
     @GetMapping({"/","/home","/index"})
     public String getHome() {
-        return "site/index";
+        return "admin/index";
     }
 
 }

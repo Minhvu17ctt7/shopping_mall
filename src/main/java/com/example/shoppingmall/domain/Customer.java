@@ -30,9 +30,11 @@ public class Customer implements Serializable {
     private Date registeredDate;
     @Column(nullable = false)
     private short status;
+    private String avatar;
+    private String rule;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+   @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Order> listOrders;
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Information>  listInformation;
 }

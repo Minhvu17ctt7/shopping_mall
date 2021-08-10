@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/dashboardLayout.html}"
+>
+<head>
+  </head>
+
+  <body>
+<div layout:fragment="content">
+    <section class="row">
+        <div class="col mt-4">
+            <form th:action="@{/admin/customers/saveOrUpdate}" method="post" enctype="multipart/form-data" th:object="${customer}">
+            <div class="card">
+                <div class="card-header">
+                    <h3 th:if="${customer.isEdit}">Edit customer</h3>
+                    <h3 th:if="${!customer.isEdit}">Save customer</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <img
+                                    th:src="${customer.avatar !=null ? '/admin/customers/images/' + customer.avatar : '/images/image available.jpg'}"
+                                    src="/images/image-available.jpg" id="imgavatar" width="90%" alt="">
+                            <div class="form-group">
+                                <label for="avatar">avatat</label>
+                                <input type="file"
+                                       class="form-control" name="imageFile" id="avatar" aria-describedby="avatarHidd" placeholder="avatar">
+                                <small id="avatarHidd" class="form-text text-muted">avatar is required</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="hidden" th:field="*{isEdit}" >
+                            <div class="form-group">
+                            <label for="customerId">customer Id</label>
+                            <input type="text" class="form-control" th:field="*{customerId}" id="customerId" aria-describedby="customerIdHid" placeholder="customer Id">
+                            <small id="customerIdHid" class="form-text text-muted">customer Id is required</small>
+                        </div>
+                        </div>
+                        <div class="col-6"><div class="form-group">
+                            <label for="ruleId">Rule</label>
+                            <select class="form-control" th:field="*{rule}" name="ruleId" id="ruleId">
+                                <option value="ADMIM">ADMIN</option>
+                                <option value="USER">USER</option>
+                            </select>
+                        </div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"><div class="form-group">
+                            <label for="name">Name customer</label>
+                            <input type="text" class="form-control" th:field="*{name}" id="name" aria-describedby="nameHid" placeholder="name customer">
+                            <small id="nameHid" class="form-text text-muted">name customer is required</small>
+                        </div></div>
+                        <div class="col-6"><div class="form-group">
+                            <label for="password">password customer</label>
+                            <input type="text" class="form-control" th:field="*{password}" id="password" aria-describedby="passwordHid" placeholder="password customer">
+                            <small id="passwordHid" class="form-text text-muted">password customer is required</small>
+                        </div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"> <div class="form-group">
+                            <label for="phone">phone</label>
+                            <input type="text" class="form-control" th:field="*{phone}" id="phone" aria-describedby="phoneHid" placeholder="phone">
+                            <small id="phoneHid" class="form-text text-muted">phone is required</small>
+                        </div></div>
+                        <div class="col-6"><div class="form-group">
+                            <label for="password">password customer</label>
+                            <input type="text" class="form-control" th:field="*{password}" id="password" aria-describedby="passwordHid" placeholder="password customer">
+                            <small id="passwordHid" class="form-text text-muted">password customer is required</small>
+                        </div></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="text" placeholder="registeredDate">
+                        </div>
+                    </div>
+                    </div>
+
+
+                </div>
+                <div class="card-footer text-muted">
+                    <button class="btn btn-success">New</button>
+                    <button class="btn btn-primary"> <span th:if="${customer.isEdit}" >Update</span>
+                        <span th:if="${!customer.isEdit}" >Save</span>
+                    </button>
+                    <button th:if="${customer.isEdit}" th:href="@{'/admin/customers/delete/' + ${customer.customerId}}" class="btn btn-danger float-right">Delete</button>
+                </div>
+            </div>
+            </form>
+        </div>
+    </section>
+</div>
+  </body>
+
+</html>

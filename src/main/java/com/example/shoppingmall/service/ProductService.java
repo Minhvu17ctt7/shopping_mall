@@ -69,4 +69,10 @@ public interface ProductService {
     <S extends Product> long count(Example<S> example);
 
     <S extends Product> boolean exists(Example<S> example);
+
+
+
+    List<Product> findByTitleContaining(String title);
+
+    Page<Product> findByTitleContaining(String title, Pageable page);
 }

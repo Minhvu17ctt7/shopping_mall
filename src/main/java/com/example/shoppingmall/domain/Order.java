@@ -32,6 +32,6 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "customerId")
     private Customer customer;
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Item> listItem;
 }

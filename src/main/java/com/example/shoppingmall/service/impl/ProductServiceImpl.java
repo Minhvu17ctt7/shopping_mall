@@ -165,4 +165,14 @@ public class ProductServiceImpl implements ProductService {
     public <S extends Product> boolean exists(Example<S> example) {
         return productRepository.exists(example);
     }
+
+    @Override
+    public List<Product> findByTitleContaining(String title) {
+        return productRepository.findByTitleContaining(title);
+    }
+
+    @Override
+    public Page<Product> findByTitleContaining(String title, Pageable page) {
+        return productRepository.findByTitleContaining(title, page);
+    }
 }
